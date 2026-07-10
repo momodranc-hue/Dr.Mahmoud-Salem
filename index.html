@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أبحاث الاقتصاد الزراعي - د. محمود عبدالحميد السيد سالم</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a4731 0%, #2d7a4f 50%, #1a4731 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* ===== LOGIN OVERLAY ===== */
+        .login-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(8px);
+        }
+
+        .login-overlay.active {
+            display: flex;
+        }
+
+        .login-box {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            width: 380px;
+            max-width: 90vw;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border: 3px solid #c8a84b;
+            text-align: center;
+            animation: popIn 0.4s ease;
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0.7);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .login-box .lock-icon {
+            font-size: 55px;
+            margin-bottom: 10px;
+        }
+
+        .login-box h2 {
+            color: #0d3320;
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .login-box p {
+            color: #888;
+            font-size: 13px;
+            margin-bottom: 25px;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 13px 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 15px;
+            margin-bottom: 15px;
+            text-align: right;
+            direction: rtl;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .login-box input:focus {
+            outline: none;
+            border-color: #1a5c35;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 13px;
+            background: linear-gradient(135deg, #0d3320, #1a5c35);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        .login-btn:hover {
+            background: linear-gradient(135deg, #c8a84b, #f0d080);
+            color: #0d3320;
+        }
+
+        .login-error {
+            display: none;
+            background: #ffe8e8;
+            color: #c0392b;
+            border: 1px solid #f5c6cb;
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 12px;
+            font-size: 13px;
+        }
+
+        .close-login {
+            margin-top: 15px;
+            background: none;
+            border: none;
+            color: #888;
+            cursor: pointer;
+            font-size: 13px;
+            font-family: inherit;
+            text-decoration: underline;
+        }
+
+        .close-login:hover {
+            color: #333;
+        }
+
+        /* ===== ADMIN BAR ===== */
+        .admin-bar {
+            display: none;
+            background: linear-gradient(90deg, #0d3320, #1a5c35);
+            border-bottom: 2px solid #c8a84b;
+            padding: 10px 30px;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-bar.active {
+            display: flex;
+        }
+
+        .admin-bar span {
+            color: #c8a84b;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .logout-btn {
+            background: linear-gradient(135deg, #8a2d2d, #c03030);
+            color: white;
+            border: none;
+            padding: 7px 18px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: linear-gradient(135deg, #c03030, #8a2d2d);
+            transform: scale(1.05);
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            background: linear-gradient(90deg, #0d3320, #1a5c35, #0d3320);
+            padding: 15px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            border-bottom: 3px solid #c8a84b;
+        }
+
+        header .logo-text {
+            color: #c8a84b;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        header h1 {
+            color: #ffffff;
+            font-size: 22px;
+            text-align: center;
+            flex: 1;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Admin Login Button in Header */
+        .admin-login-btn {
+            background: rgba(200, 168, 75, 0.15);
+            border: 1px solid rgba(200, 168, 75, 0.4);
+            color: #c8a84b;
+            padding: 7px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        .admin-login-btn:hover {
+            background: rgba(200, 168, 75, 0.3);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 20px 30px;
+            gap: 60px;
+            flex-wrap: wrap;
+        }
+
+        .profile-image-wrapper {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #c8a84b, #f0d080, #c8a84b);
+            padding: 5px;
+            box-shadow: 0 0 40px rgba(200, 168, 75, 0.6);
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 40px rgba(200, 168, 75, 0.6);
+            }
+
+            50% {
+                box-shadow: 0 0 70px rgba(200, 168, 75, 0.9);
+            }
+        }
+
+        .profile-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: top center;
+            border: 4px solid #0d3320;
+        }
+
+        .profile-info {
+            text-align: center;
+            color: white;
+            margin-top: 20px;
+        }
+
+        .profile-info h2 {
+            font-size: 26px;
+            color: #c8a84b;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            margin-bottom: 8px;
+        }
+
+        .profile-info p {
+            font-size: 16px;
+            color: #a8e6c3;
+        }
+
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #c8a84b, #f0d080);
+            color: #0d3320;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        /* ===== STATS ===== */
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(200, 168, 75, 0.4);
+            border-radius: 15px;
+            padding: 20px 30px;
+            text-align: center;
+            color: white;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card .number {
+            font-size: 36px;
+            color: #c8a84b;
+            font-weight: bold;
+        }
+
+        .stat-card .label {
+            font-size: 14px;
+            color: #a8e6c3;
+            margin-top: 5px;
+        }
+
+        /* ===== MAIN ===== */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin: 30px 0 25px;
+        }
+
+        .section-title h2 {
+            display: inline-block;
+            background: linear-gradient(135deg, #c8a84b, #f0d080);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 28px;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, #c8a84b, #f0d080, #c8a84b);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        /* ===== RESEARCH GRID ===== */
+        .research-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .research-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(200, 168, 75, 0.3);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .research-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #0d3320, #1a5c35);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .new-card .card-header {
+            background: linear-gradient(135deg, #1a3a5c, #2d5a8a);
+        }
+
+        .card-number {
+            background: linear-gradient(135deg, #c8a84b, #f0d080);
+            color: #0d3320;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .card-journal {
+            color: #a8e6c3;
+            font-size: 12px;
+            flex: 1;
+        }
+
+        .card-body {
+            padding: 20px;
+            flex: 1;
+        }
+
+        .card-body h3 {
+            color: #0d3320;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+        .tag {
+            background: #e8f5e9;
+            color: #1a5c35;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            border: 1px solid #a8d5b5;
+        }
+
+        .new-card .tag {
+            background: #e3f0ff;
+            color: #1a3a5c;
+            border-color: #a8c5e0;
+        }
+
+        .card-footer {
+            padding: 15px 20px;
+            border-top: 1px solid #e0e0e0;
+            background: #f9f9f9;
+        }
+
+        .read-btn {
+            display: block;
+            text-align: center;
+            background: linear-gradient(135deg, #1a5c35, #2d7a4f);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .read-btn:hover {
+            background: linear-gradient(135deg, #c8a84b, #f0d080);
+            color: #0d3320;
+        }
+
+        .read-btn::before {
+            content: '📄 ';
+        }
+
+        /* ===== ADD RESEARCH PANEL (ADMIN ONLY) ===== */
+        .add-research-section {
+            display: none;
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 2px solid #c8a84b;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .add-research-section.active {
+            display: block;
+        }
+
+        .add-research-section h2 {
+            color: #0d3320;
+            font-size: 22px;
+            margin-bottom: 25px;
+            text-align: center;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #c8a84b;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            color: #0d3320;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 12px 15px;
+            border: 2px solid #d0d0d0;
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.3s;
+            text-align: right;
+            direction: rtl;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #1a5c35;
+            box-shadow: 0 0 10px rgba(26, 92, 53, 0.2);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .add-btn {
+            background: linear-gradient(135deg, #0d3320, #1a5c35);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: block;
+            margin: 20px auto 0;
+            font-family: inherit;
+        }
+
+        .add-btn:hover {
+            background: linear-gradient(135deg, #c8a84b, #f0d080);
+            color: #0d3320;
+            transform: scale(1.05);
+        }
+
+        .success-msg {
+            display: none;
+            background: #e8f5e9;
+            color: #1a5c35;
+            border: 2px solid #a8d5b5;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: linear-gradient(90deg, #0d3320, #1a5c35, #0d3320);
+            color: #a8e6c3;
+            text-align: center;
+            padding: 25px;
+            border-top: 3px solid #c8a84b;
+            margin-top: 30px;
+        }
+
+        footer .footer-name {
+            color: #c8a84b;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        footer p {
+            font-size: 13px;
+            margin: 3px 0;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            header h1 {
+                font-size: 16px;
+            }
+
+            .hero {
+                gap: 30px;
+                padding: 30px 15px;
+            }
+
+            .research-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-row {
+                gap: 15px;
+            }
+
+            .add-research-section {
+                padding: 25px 15px;
+            }
+
+            .login-box {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== LOGIN OVERLAY ===== -->
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-box">
+            <div class="lock-icon">🔐</div>
+            <h2>تسجيل دخول المدير</h2>
+            <p>هذه اللوحة مخصصة لإدارة الأبحاث فقط</p>
+            <input type="text" id="adminUser" placeholder="اسم المستخدم" autocomplete="off">
+            <input type="password" id="adminPass" placeholder="كلمة المرور" autocomplete="off"
+                onkeydown="if(event.key==='Enter') doLogin()">
+            <button class="login-btn" onclick="doLogin()">🔓 دخول</button>
+            <div class="login-error" id="loginError">❌ اسم المستخدم أو كلمة المرور غير صحيحة</div>
+            <button class="close-login" onclick="closeLogin()">إغلاق</button>
+        </div>
+    </div>
+
+    <!-- ===== ADMIN BAR ===== -->
+    <div class="admin-bar" id="adminBar">
+        <span>👨‍💼 مرحباً، د. محمود — أنت في وضع الإدارة</span>
+        <button class="logout-btn" onclick="doLogout()">🚪 تسجيل الخروج</button>
+    </div>
+
+    <!-- ===== HEADER ===== -->
+    <header>
+        <div class="logo-text">🌿 الاقتصاد الزراعي</div>
+        <h1>🌾 أبحاث الاقتصاد الزراعي 🌾</h1>
+        <button class="admin-login-btn" id="adminLoginHeaderBtn" onclick="openLogin()">🔑 دخول المدير</button>
+    </header>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+        <div style="display:flex;flex-direction:column;align-items:center;">
+            <div class="profile-image-wrapper">
+                <img src="D.mahoud.jpg" alt="د. محمود عبدالحميد السيد سالم"
+                    onerror="this.onerror=null;this.parentElement.innerHTML='<div style=\'width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,#1a5c35,#c8a84b);display:flex;align-items:center;justify-content:center;font-size:70px;\'>👨‍🎓</div>'" />
+            </div>
+            <div class="profile-info">
+                <h2>د. محمود عبدالحميد السيد سالم</h2>
+                <p>قسم الاقتصاد الزراعي</p>
+                <div class="badge">🏛️ عضو هيئة تدريس بجامعة الأزهر - كلية الزراعة</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== STATS ===== -->
+    <div class="stats-row">
+        <div class="stat-card">
+            <div class="number" id="research-count">7</div>
+            <div class="label">📚 بحث منشور</div>
+        </div>
+        <div class="stat-card">
+            <div class="number">6</div>
+            <div class="label">📰 مجلة علمية محكّمة</div>
+        </div>
+        <div class="stat-card">
+            <div class="number">🌾</div>
+            <div class="label">الاقتصاد الزراعي</div>
+        </div>
+    </div>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <div class="main-content">
+
+        <div class="section-title">
+            <h2>🔬 الأبحاث العلمية المنشورة</h2>
+        </div>
+
+        <div class="research-grid" id="all-research-grid">
+
+            <!-- Card 1 -->
+            <div class="research-card">
+                <div class="card-header">
+                    <div class="card-number">1</div>
+                    <div class="card-journal">
+                        <strong style="color:#c8a84b;">المجلة العلمية للعلوم الزراعية</strong><br>
+                        <span>AASJ - EKB</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h3>بحث في الاقتصاد الزراعي - المجلة العلمية للعلوم الزراعية</h3>
+                    <div class="card-tags">
+                        <span class="tag">اقتصاد زراعي</span>
+                        <span class="tag">أبحاث محكّمة</span>
+                        <span class="tag">مصر</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="https://aasj.journals.ekb.eg/article_418423.html" target="_blank" class="read-btn">قراءة
+                        البحث كاملاً</a>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="research-card">
+                <div class="card-header">
+                    <div class="card-number">2</div>
+                    <div class="card-journal">
+                        <strong style="color:#c8a84b;">مجلة الاقتصاد الزراعي والتنمية</strong><br>
+                        <span>MEAE - EKB</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h3>بحث في الاقتصاد الزراعي - مجلة الاقتصاد الزراعي المصرية (1)</h3>
+                    <div class="card-tags">
+                        <span class="tag">تنمية زراعية</span>
+                        <span class="tag">اقتصاد ريفي</span>
+                        <span class="tag">إنتاج</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="https://meae.journals.ekb.eg/article_330883.html" target="_blank" class="read-btn">قراءة
+                        البحث كاملاً</a>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="research-card">
+                <div class="card-header">
+                    <div class="card-number">3</div>
+                    <div class="card-journal">
+                        <strong style="color:#c8a84b;">المجلة الزراعية لجامعة الأزهر</strong><br>
+                        <span>AJAR - EKB</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h3>بحث في الاقتصاد الزراعي - المجلة الزراعية لجامعة الأزهر</h3>
+                    <div class="card-tags">
+                        <span class="tag">جامعة الأزهر</span>
+                        <span class="tag">زراعة</span>
+                        <span class="tag">اقتصاد</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="https://ajar.journals.ekb.eg/article_360591.html?lang=ar" target="_blank"
+                        class="read-btn">قراءة البحث كاملاً</a>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="research-card">
+                <div class="card-header">
+                    <div class="card-number">4</div>
+                    <div class="card-journal">
+                        <strong style="color:#c8a84b;">المجلة المصرية للاقتصاد الزراعي</strong><br>
+                        <span>EJABF - EKB</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h3>بحث في الاقتصاد الزراعي - المجلة المصرية للاقتصاد الزراعي (1)</h3>
+                    <div class="card-tags">
+                        <span class="tag">اقتصاد زراعي</span>
+                        <span class="tag">تحليل</span>
+                        <span class="tag">مصر</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="https://ejabf.journals.ekb.eg/article_486298.html" target="_blank" class="read-btn">قراءة
+                        البحث كاملاً</a>
+                </div>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="research-card">
+                <div class="card-header">
+                    <div class="card-number">5</div>
+                    <div class="card-journal">
+                        <strong style="color:#c8a84b;">المجلة المصرية للاقتصاد الزراعي</strong><br>
+                        <span>EJABF - EKB</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h3>بحث في الاقتصاد الزراعي - المجلة المصرية للاقتصاد الزراعي (2)</h3>
+                    <div class="card-tags">
+                        <span class="tag">سياسات زراعية</span>
+                        <span class="tag">موارد</span>
+                        <span class="tag">تنمية</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="https://ejabf.journals.ekb.eg/article_396362.html" target="_blank" class="read-btn">قراءة
+                        البحث كاملاً</a>
+                </div>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="research-card">
+                <div class="card-header">
+                    <div class="card-number">6</div>
+                    <div class="card-journal">
+                        <strong style="color:#c8a84b;">مجلة الزراعة المستدامة</strong><br>
+                        <span>JSAS - EKB</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h3>بحث في الاقتصاد الزراعي - مجلة الاتحاد العربي للزراعة المستدامة</h3>
+                    <div class="card-tags">
+                        <span class="tag">زراعة مستدامة</span>
+                        <span class="tag">بيئة</span>
+                        <span class="tag">اقتصاد</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="https://jsas.journals.ekb.eg/article_365683.html" target="_blank" class="read-btn">قراءة
+                        البحث كاملاً</a>
+                </div>
+            </div>
+
+            <!-- Card 7 -->
+            <div class="research-card">
+                <div class="card-header">
+                    <div class="card-number">7</div>
+                    <div class="card-journal">
+                        <strong style="color:#c8a84b;">مجلة الاقتصاد الزراعي والتنمية</strong><br>
+                        <span>MEAE - EKB</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h3>بحث في الاقتصاد الزراعي - مجلة الاقتصاد الزراعي المصرية (2)</h3>
+                    <div class="card-tags">
+                        <span class="tag">إنتاج زراعي</span>
+                        <span class="tag">تحليل اقتصادي</span>
+                        <span class="tag">سياسات</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="https://meae.journals.ekb.eg/article_306746.html" target="_blank" class="read-btn">قراءة
+                        البحث كاملاً</a>
+                </div>
+            </div>
+
+        </div><!-- end research-grid -->
+
+        <!-- ===== ADD RESEARCH PANEL (ADMIN ONLY - hidden by default) ===== -->
+        <div class="add-research-section" id="addPanel">
+            <h2>➕ إضافة بحث جديد</h2>
+            <form id="addResearchForm" onsubmit="addResearch(event)">
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label>📌 عنوان البحث *</label>
+                        <input type="text" id="researchTitle" placeholder="أدخل عنوان البحث..." required>
+                    </div>
+                    <div class="form-group">
+                        <label>📰 اسم المجلة *</label>
+                        <input type="text" id="journalName" placeholder="اسم المجلة العلمية..." required>
+                    </div>
+                    <div class="form-group">
+                        <label>📅 سنة النشر</label>
+                        <input type="number" id="researchYear" placeholder="مثال: 2024" min="1990" max="2030">
+                    </div>
+                    <div class="form-group full-width">
+                        <label>🔗 رابط البحث *</label>
+                        <input type="url" id="researchLink" placeholder="https://..." required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>📝 ملخص البحث (اختياري)</label>
+                        <textarea id="researchAbstract" placeholder="أدخل ملخصاً مختصراً للبحث..."></textarea>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>🏷️ الكلمات المفتاحية (مفصولة بفاصلة)</label>
+                        <input type="text" id="researchTags" placeholder="مثال: اقتصاد زراعي, إنتاج, مصر">
+                    </div>
+                </div>
+                <button type="submit" class="add-btn">➕ إضافة البحث</button>
+                <div class="success-msg" id="successMsg">✅ تم إضافة البحث بنجاح!</div>
+            </form>
+        </div>
+
+    </div><!-- end main-content -->
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="footer-name">🌾 د. محمود عبدالحميد السيد سالم 🌾</div>
+        <p>عضو هيئة تدريس - قسم الاقتصاد الزراعي - كلية الزراعة - جامعة الأزهر</p>
+        <p style="margin-top:10px;color:#c8a84b;">🌿 جميع الحقوق محفوظة © 2024 🌿</p>
+    </footer>
+
+    <script>
+        /* =========================================
+           بيانات الدخول — غيّر هذه القيم فقط
+        ========================================= */
+        const ADMIN_USER = "mahmoud_salem";   // ← اسم المستخدم
+        const ADMIN_PASS = "Azhar@2024";      // ← كلمة المرور
+
+        /* =========================================
+           حالة تسجيل الدخول
+        ========================================= */
+        let isLoggedIn = false;
+        let totalCount = 7;
+
+        /* فتح نافذة تسجيل الدخول */
+        function openLogin() {
+            document.getElementById('loginOverlay').classList.add('active');
+            document.getElementById('adminUser').value = '';
+            document.getElementById('adminPass').value = '';
+            document.getElementById('loginError').style.display = 'none';
+            setTimeout(() => document.getElementById('adminUser').focus(), 300);
+        }
+
+        /* إغلاق نافذة تسجيل الدخول */
+        function closeLogin() {
+            document.getElementById('loginOverlay').classList.remove('active');
+        }
+
+        /* تنفيذ تسجيل الدخول */
+        function doLogin() {
+            const user = document.getElementById('adminUser').value.trim();
+            const pass = document.getElementById('adminPass').value;
+
+            if (user === ADMIN_USER && pass === ADMIN_PASS) {
+                isLoggedIn = true;
+                closeLogin();
+                showAdminMode();
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+                document.getElementById('adminPass').value = '';
+                document.getElementById('adminPass').focus();
+            }
+        }
+
+        /* تفعيل وضع الإدارة */
+        function showAdminMode() {
+            document.getElementById('adminBar').classList.add('active');
+            document.getElementById('addPanel').classList.add('active');
+            document.getElementById('adminLoginHeaderBtn').style.display = 'none';
+            // تمرير ناعم لنموذج الإضافة
+            setTimeout(() => {
+                document.getElementById('addPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 400);
+        }
+
+        /* تسجيل الخروج */
+        function doLogout() {
+            isLoggedIn = false;
+            document.getElementById('adminBar').classList.remove('active');
+            document.getElementById('addPanel').classList.remove('active');
+            document.getElementById('adminLoginHeaderBtn').style.display = 'inline-block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        /* إغلاق النافذة بالنقر خارجها */
+        document.getElementById('loginOverlay').addEventListener('click', function (e) {
+            if (e.target === this) closeLogin();
+        });
+
+        /* =========================================
+           إضافة بحث جديد (للمدير فقط)
+        ========================================= */
+        function addResearch(event) {
+            event.preventDefault();
+            if (!isLoggedIn) return; // حماية إضافية
+
+            const title = document.getElementById('researchTitle').value.trim();
+            const journal = document.getElementById('journalName').value.trim();
+            const year = document.getElementById('researchYear').value.trim();
+            const link = document.getElementById('researchLink').value.trim();
+            const abstract = document.getElementById('researchAbstract').value.trim();
+            const tagsRaw = document.getElementById('researchTags').value.trim();
+
+            if (!title || !journal || !link) {
+                alert('يرجى ملء الحقول المطلوبة (*)');
+                return;
+            }
+
+            totalCount++;
+            document.getElementById('research-count').textContent = totalCount;
+
+            // بناء الكلمات المفتاحية
+            let tagsHtml = '';
+            if (tagsRaw) {
+                tagsRaw.split(',').map(t => t.trim()).filter(t => t).forEach(tag => {
+                    tagsHtml += `<span class="tag">${tag}</span>`;
+                });
+            }
+
+            // ملخص
+            const abstractHtml = abstract
+                ? `<p style="color:#555;font-size:13px;line-height:1.6;margin-bottom:12px;">${abstract}</p>`
+                : '';
+
+            // سنة
+            const yearHtml = year
+                ? `<span style="color:#a8e6c3;font-size:12px;">📅 ${year}</span>`
+                : '';
+
+            // إنشاء البطاقة
+            const card = document.createElement('div');
+            card.className = 'research-card new-card';
+            card.style.animation = 'fadeInUp 0.5s ease';
+            card.innerHTML = `
+            <div class="card-header">
+                <div class="card-number">${totalCount}</div>
+                <div class="card-journal">
+                    <strong style="color:#c8a84b;">${journal}</strong><br>
+                    ${yearHtml}
+                </div>
+            </div>
+            <div class="card-body">
+                <h3>${title}</h3>
+                ${abstractHtml}
+                <div class="card-tags">${tagsHtml}</div>
+            </div>
+            <div class="card-footer">
+                <a href="${link}" target="_blank" class="read-btn">قراءة البحث كاملاً</a>
+            </div>
+        `;
+
+            document.getElementById('all-research-grid').appendChild(card);
+
+            // رسالة نجاح
+            const msg = document.getElementById('successMsg');
+            msg.style.display = 'block';
+            setTimeout(() => { msg.style.display = 'none'; }, 3500);
+
+            // تصفير النموذج
+            document.getElementById('addResearchForm').reset();
+
+            // تمرير للبطاقة الجديدة
+            setTimeout(() => {
+                card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
+        }
+    </script>
+
+</body>
+
+</html>
